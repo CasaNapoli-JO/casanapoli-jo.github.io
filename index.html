@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa Napoli</title>
+
+<style>
+body{margin:0;font-family:Arial;background:#0e0e0e;color:#fff}
+header{padding:15px;background:#000;text-align:center;font-size:22px;color:#e63946}
+.section{padding:15px}
+h2{color:#e63946}
+.item{background:#1b1b1b;padding:10px;margin:10px 0;border-radius:8px}
+button{width:100%;padding:8px;background:#e63946;color:#fff;border:0;border-radius:6px}
+.cart{position:fixed;bottom:20px;right:20px;background:#000;padding:10px;border-radius:50px}
+.panel{position:fixed;right:-400px;top:0;width:320px;height:100%;background:#000;transition:.3s;padding:10px;overflow:auto}
+.panel.open{right:0}
+.close{background:red}
+</style>
+
+</head>
+
+<body>
+
+<header>Casa Napoli 🍕</header>
+
+<!-- MENU -->
+<div class="section">
+
+<h2>🍕 البيتزا</h2>
+
+<div class="item">بيتزا إيطالية كلاسيكية - 3.250 <button onclick="add('Classic Pizza',3.25)">إضافة</button></div>
+<div class="item">دجاج باربكيو - 3.950 <button onclick="add('BBQ Chicken',3.95)">إضافة</button></div>
+<div class="item">بيبيروني - 3.750 <button onclick="add('Pepperoni',3.75)">إضافة</button></div>
+<div class="item">فطر - 3.500 <button onclick="add('Mushroom',3.5)">إضافة</button></div>
+<div class="item">خضروات - 3.500 <button onclick="add('Veg',3.5)">إضافة</button></div>
+<div class="item">أربعة أجبان - 3.750 <button onclick="add('4 Cheese',3.75)">إضافة</button></div>
+
+<h2>🍟 الجانبيات</h2>
+
+<div class="item">بطاطا - 0.750 <button onclick="add('Fries',0.75)">إضافة</button></div>
+<div class="item">ودجز - 1.250 <button onclick="add('Wedges',1.25)">إضافة</button></div>
+<div class="item">حلقات بصل - 1.000 <button onclick="add('Onion Rings',1)">إضافة</button></div>
+
+<h2>🥤 مشروبات</h2>
+
+<div class="item">كولا - 0.500 <button onclick="add('Cola',0.5)">إضافة</button></div>
+
+<h2>🔥 العروض</h2>
+
+<div class="item">عرض الثنائي الذهبي - 5.990 <button onclick="add('Golden Deal',5.99)">إضافة</button></div>
+
+</div>
+
+<!-- CART -->
+<div class="cart" onclick="openCart()">🛒 <span id="count">0</span></div>
+
+<div class="panel" id="panel">
+
+<button class="close" onclick="closeCart()">إغلاق</button>
+
+<h3>السلة</h3>
+<div id="list"></div>
+
+<h3>الإجمالي: <span id="total">0</span></h3>
+
+<button onclick="send()">إرسال واتساب</button>
+
+</div>
+
+<script>
+
+let cart=[]
+let total=0
+
+function add(name,price){
+cart.push({name,price})
+total+=price
+update()
+}
+
+function update(){
+document.getElementById("count").innerText=cart.length
+
+let html=""
+cart.forEach(i=>{
+html+=`<div>${i.name} - ${i.price}</div>`
+})
+
+document.getElementById("list").innerHTML=html
+document.getElementById("total").innerText=total.toFixed(2)
+}
+
+function openCart(){
+document.getElementById("panel").classList.add("open")
+}
+
+function closeCart(){
+document.getElementById("panel").classList.remove("open")
+}
+
+function send(){
+let msg="New Order Casa Napoli%0A"
+cart.forEach(i=>{
+msg+=i.name+" "+i.price+"%0A"
+})
+msg+="Total: "+total
+window.open("https://wa.me/962790050175?text="+msg)
+}
+
+</script>
+
+</body>
+</html>
